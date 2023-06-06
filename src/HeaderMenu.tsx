@@ -1,6 +1,7 @@
 import { createStyles, Header, Menu, Group, Center, Burger, Container, rem } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconAlien, IconChevronDown } from '@tabler/icons-react';
+import { useLocation, useNavigation } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -48,6 +49,7 @@ interface HeaderSearchProps {
 
 export function HeaderMenu({ links }: HeaderSearchProps) {
   const [opened, { toggle }] = useDisclosure(false);
+  const location = useLocation();
   const { classes } = useStyles();
 
   const items = links.map((link) => {
@@ -92,7 +94,7 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
         <div className={classes.inner}>
           <IconAlien size={28} />
           <Group spacing={5} className={classes.links}>
-            {items}
+            {location.pathname.includes("auth") ? items : null}
           </Group>
           <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
         </div>
@@ -102,32 +104,6 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
 }
 export const DefaultHeaderProps: HeaderSearchProps = {
   "links": [
-    {
-      "link": "/about",
-      "label": "Features"
-    },
-    {
-      "link": "#1",
-      "label": "Learn",
-      "links": [
-        {
-          "link": "/docs",
-          "label": "Documentation"
-        },
-        {
-          "link": "/resources",
-          "label": "Resources"
-        },
-        {
-          "link": "/community",
-          "label": "Community"
-        },
-        {
-          "link": "/blog",
-          "label": "Blog"
-        }
-      ]
-    },
     {
       "link": "/auth/register",
       "label": "Registrarse"
